@@ -299,47 +299,9 @@ class TaapiioProcess:
 
             # 2. Poll all values from the aggregate using bulk queries to the taapi.io API
             aggregate = self.agg_cli.load_agg()
-            if all(len(v) == 0 for v in aggregate.values()):
-                sleep(0.1)  # To prevent excessive spamming
-                continue
+            sleep(0.1)  # To prevent excessive spamming
 
-            for symbol, intervals in aggregate.items():
-                for interval, indicators in intervals.items():
-                    num_indicators += len(indicators)  # For logging
 
-                    # Prepare the bulk query for the API
-                    exclude_keys = ["values", "last_update"]
-                    indicators_query = [
-                        {k: v for k, v in indicator.items() if k not in exclude_keys}
-                        for indicator in indicators
-                    ]
-                    query = {
-                        "secret": self.apikey,
-                        "construct": {
-                            "exchange": DEFAULT_EXCHANGE,
-                            "symbol": symbol,
-                            "interval": interval,
-                            "indicators": indicators_query,
-                        },
-                    }
-                    r = self.call_api(endpoint=BULK_ENDPOINT, params=query)
-                    # print("TAAPI.IO RESPONSE:", r)
-                    try:
-                        responses = r["data"]
-                    except KeyError:
-                        # if "error" in r.keys():
-                        #     logger.warn(f"Taapio error occurred when building aggregate: {r['error']}")
-                        raise Exception(f"Error occurred calling taapi.io API - {r}")
-
-                    # Assign returned values and update aggregate:
-                    for i, response in enumerate(responses):
-                        for output_variable in self.ta_db[
-                            indicators[i]["indicator"].upper()
-                        ]["output"]:
-                            indicators[i]["values"][output_variable] = response[
-                                "result"
-                            ][output_variable]
-                        indicators[i]["last_update"] = int(time())
 
             # 3. Dump aggregate with updated values so that the alerts client can reference it
             self.agg_cli.dump_agg(aggregate)

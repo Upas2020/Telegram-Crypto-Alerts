@@ -31,48 +31,42 @@ class CEXAlert:
 
 class BinancePriceResponse:
     def __init__(self, response_data: dict):
-        # Extract the variables from the response data and initialize them
-        self.symbol = str(response_data.get("symbol", ""))
-        self.priceChange = float(response_data.get("priceChange", 0.0))
-        self.priceChangePercent = float(response_data.get("priceChangePercent", 0.0))
-        self.weightedAvgPrice = float(response_data.get("weightedAvgPrice", 0.0))
-        self.openPrice = float(response_data.get("openPrice", 0.0))
-        self.highPrice = float(response_data.get("highPrice", 0.0))
-        self.lowPrice = float(response_data.get("lowPrice", 0.0))
-        self.lastPrice = float(response_data.get("lastPrice", 0.0))
-        self.volume = float(response_data.get("volume", 0.0))
-        self.quoteVolume = float(response_data.get("quoteVolume", 0.0))
-        self.openTime = int(response_data.get("openTime", 0))
-        self.closeTime = int(response_data.get("closeTime", 0))
-        self.firstId = int(response_data.get("firstId", 0))
-        self.lastId = int(response_data.get("lastId", 0))
-        self.count = int(response_data.get("count", 0))
-        self.window = (
-            str(response_data.get("window", "")) if "window" in response_data else None
-        )
-        self.location = (
-            str(response_data.get("location", ""))
-            if "location" in response_data
-            else None
-        )
+        # Extracting data from the response, assuming "data" is a list containing one dictionary
+        data = response_data.get("data", [{}])[0]
+
+        self.symbol = str(data.get("symbol", ""))
+        self.open = float(data.get("open", 0.0))
+        self.high24h = float(data.get("high24h", 0.0))
+        self.low24h = float(data.get("low24h", 0.0))
+        self.lastPrice = float(data.get("lastPr", 0.0))
+        self.quoteVolume = float(data.get("quoteVolume", 0.0))
+        self.baseVolume = float(data.get("baseVolume", 0.0))
+        self.usdtVolume = float(data.get("usdtVolume", 0.0))
+        self.timestamp = int(data.get("ts", 0))
+        self.bidPrice = float(data.get("bidPr", 0.0))
+        self.askPrice = float(data.get("askPr", 0.0))
+        self.bidSize = float(data.get("bidSz", 0.0))
+        self.askSize = float(data.get("askSz", 0.0))
+        self.openUtc = float(data.get("openUtc", 0.0))
+        self.changeUtc24h = float(data.get("changeUtc24h", 0.0))
+        self.change24h = float(data.get("change24h", 0.0))
 
     def to_dict(self):
         return {
             "symbol": self.symbol,
-            "priceChange": self.priceChange,
-            "priceChangePercent": self.priceChangePercent,
-            "weightedAvgPrice": self.weightedAvgPrice,
-            "openPrice": self.openPrice,
-            "highPrice": self.highPrice,
-            "lowPrice": self.lowPrice,
+            "open": self.open,
+            "high24h": self.high24h,
+            "low24h": self.low24h,
             "lastPrice": self.lastPrice,
-            "volume": self.volume,
             "quoteVolume": self.quoteVolume,
-            "openTime": self.openTime,
-            "closeTime": self.closeTime,
-            "firstId": self.firstId,
-            "lastId": self.lastId,
-            "count": self.count,
-            "window": self.window,
-            "location": self.location,
+            "baseVolume": self.baseVolume,
+            "usdtVolume": self.usdtVolume,
+            "timestamp": self.timestamp,
+            "bidPrice": self.bidPrice,
+            "askPrice": self.askPrice,
+            "bidSize": self.bidSize,
+            "askSize": self.askSize,
+            "openUtc": self.openUtc,
+            "changeUtc24h": self.changeUtc24h,
+            "change24h": self.change24h,
         }

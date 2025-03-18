@@ -683,12 +683,12 @@ class TelegramBot(TeleBot):
         try:
             response = requests.get(
                 self.binance_price_endpoint.format(
-                    pair.replace("/", ""), BINANCE_TIMEFRAMES[0]
+                    pair.replace("/", "")
                 )
             )
             # response = requests.get(f'https://api.binance.com/api/v3/ticker/price?symbol={pair.replace("/", "")}')
             try:
-                return round(float(response.json()["lastPrice"]), 3)
+                return round(float(response.json()["data"][0]["lastPr"]), 9)
             except KeyError:
                 raise ValueError(
                     f"{pair} is not a valid pair.\n" f"API Response: {response.json()}"

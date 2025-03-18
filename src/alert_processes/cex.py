@@ -178,7 +178,7 @@ class CEXAlertProcess(BaseAlertProcess):
 
         :return float: price of the token pair
         """
-        url = self.endpoint.format(token_pair, BINANCE_TIMEFRAMES[0])
+        url = self.endpoint.format(token_pair)
         try:
 
             response = requests.get(url)

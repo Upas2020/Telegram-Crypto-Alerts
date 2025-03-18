@@ -16,10 +16,7 @@ MAX_ALERTS_PER_USER = (
 
 """BINANCE DATA CONFIG"""
 BINANCE_LOCATIONS = ["us", "global"]
-BINANCE_PRICE_URL_GLOBAL = "https://api.binance.com/api/v3/ticker?symbol={}&windowSize={}"  # (e.x. BTCUSDT, 1d)
-BINANCE_PRICE_URL_US = (
-    "https://api.binance.us/api/v3/ticker?symbol={}&windowSize={}"  # (e.x. BTCUSDT, 1d
-)
+BINANCE_PRICE_URL_GLOBAL = "https://api.bitget.com/api/v2/spot/market/tickers?symbol={}"  # (e.x. BTCUSDT, 1d)
 BINANCE_TIMEFRAMES = ["1m", "5m", "15m", "30m", "1h", "2h", "4h", "12h", "1d", "7d"]
 
 """SWAP DATA CONFIG"""
