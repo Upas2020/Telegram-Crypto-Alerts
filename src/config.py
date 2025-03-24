@@ -11,7 +11,7 @@ SIMPLE_INDICATOR_COMPARISONS = ["ABOVE", "BELOW", "PCTCHG", "24HRCHG"]
 
 """Telegram Handler Configuration"""
 MAX_ALERTS_PER_USER = (
-    10  # Integer or None (Should be set in a static configuration file)
+    1000  # Integer or None (Should be set in a static configuration file)
 )
 
 """BINANCE DATA CONFIG"""
